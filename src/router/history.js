@@ -1,17 +1,19 @@
 
 const express = require("express");
-const { json } = require("express/lib/response");
 
-const {historyCollection, historysTable} = require("../models/index.js");
+const {historyCollection} = require("../models/index.js");
 const historyRouter = express.Router();
 const bearer=require("../middleware/bearer");
-const reqValidation=require ("../middleware/reqValidation")
+const postValidation=require ("../middleware/postValidation")
+const idvalidation=require("../middleware/idValidation")
+const putValidation=require ("../middleware/putValidation")
+
 
 historyRouter.get("/history",bearer,getAll);
-historyRouter.post("/history",bearer,reqValidation(),creathistory);
-historyRouter.put("/history/:id",bearer,updating);
-historyRouter.delete("/history/:id",bearer,deleting);
-historyRouter.get("/history/:id",bearer,getOneRecored);
+historyRouter.post("/history",postValidation(),bearer,creathistory);
+historyRouter.put("/history/:id",idvalidation(),putValidation(),bearer,updating);
+historyRouter.delete("/history/:id",idvalidation(),bearer,deleting);
+historyRouter.get("/history/:id",idvalidation(),bearer,getOneRecored);
 
 
 ////////////////creat=insert////////////////////
@@ -26,14 +28,13 @@ res.status(201).json(newRecored);
 async function getAll(req,res){
     console.log(req.params);
     let history = await historyCollection.read();
-    // let userhistory= await historysTable.findAll({where:{userId:req.body.userId}})
     res.status(200).json(history);
 
 }
 
 ///////////////update/////////
 async function updating(req,res){
-
+// try{
     let id = parseInt(req.params.id);
     let newRecored = req.body;
     let found = await historyCollection.read(id);
@@ -41,6 +42,10 @@ async function updating(req,res){
         let updated = await found.update(newRecored);
         res.status(201).json(updated);
     }
+// }catch(e){
+//     res.status(500).json("invalid id or body");
+
+// }
 }
 /////////////delete///////////////
 async function deleting(req,res){
