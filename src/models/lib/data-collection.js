@@ -1,7 +1,11 @@
+
+
+
 class collection {
   constructor(model) {
     this.model = model;
   }
+
   ////////////creat=insert///////////////////////////
 
   async create(obj) {

@@ -6,8 +6,8 @@ const morgan = require("morgan");
 const errorHandler = require("./error-handlers/500.js");
 const notFound = require("./error-handlers/404.js");
 // const userRoute=require("./router/user")
-const historyRouter = require("../src/router/history");
-const authRoutes = require("./router/index.js");
+const historyRouter = require("../src/router/historyRouter");
+const authRoutes = require("./router/authRouter");
 
 
 const app = express();

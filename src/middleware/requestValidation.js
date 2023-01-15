@@ -1,5 +1,4 @@
 let isUrlHttp = require("is-url-http");
-
 function checkMethod(method) {
   let methods = ["get", "post", "delete", "put"];
   if (methods.includes(method.toLowerCase())) return true;
