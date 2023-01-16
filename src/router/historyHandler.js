@@ -58,9 +58,13 @@ async function creathistory(req, res) {
     try {
       validationResult(req).throw();
       const id = parseInt(req.params.id);
-      let recored = await historyCollection.read(id);
-      res.status(200).json(recored);
+      let record = await historyCollection.read(id);
+      console.log(record);
+      if(record===null)
+      throw new Error("Invalid id")
+      res.status(200).json(record);
     } catch (e) {
+      console.log((e));
       res.status(400).json(e);
     }
   }

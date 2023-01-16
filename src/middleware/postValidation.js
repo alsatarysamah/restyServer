@@ -1,26 +1,15 @@
-"use strict";
+const { check, body, oneOf } = require("express-validator");
 
-let {
-  checkURL,
-  checkNullURL,
-  checkNullMethod,
-  checkMethod,
-} = require("./requestValidation");
 
-module.exports = () => {
-  return (req, res, next) => {
-    try {
-      checkNullURL(req.body.url);
-      checkNullMethod(req.body.method);
-      checkURL(req.body.url);
-      if (checkMethod(req.body.method)) {
-        req.body.method = req.body.method.toLowerCase();
-      }
-
-      next();
-    } catch (e) {
-      console.log(e);
-      next(e);
-    }
-  };
+const postValidation = () => {
+  return [
+    // oneOf([check("token").isEmpty()], "tokeeeeeeen"),
+    body("url", "Invalid or Missing URL").not().isEmpty().isURL(),
+    body("method", "Invalid or Missing method")
+      .not("")
+      .isEmpty()
+      .isIn(["get", "post", "delete", "put"]),
+    body("userId", "Invalid or missing userId").not().isEmpty().isInt(),
+  ];
 };
+module.exports = { postValidation };
