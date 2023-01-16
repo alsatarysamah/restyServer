@@ -18,10 +18,7 @@ const users = (sequelize, DataTypes) => {
       token: {
         type: DataTypes.VIRTUAL,
       },
-      email: {
-        type: DataTypes.STRING,
-      },
-      favItems: { type: DataTypes.ARRAY(DataTypes.INTEGER), defaultValue: [] },
+      
     },
     { timestamps: false }
   );

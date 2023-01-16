@@ -6,22 +6,17 @@ const { validationResult } = require("express-validator");
 
 async function handleSignup(req, res, next) {
   try {
-    const errors = validationResult(req);
+    validationResult(req).throw();
 
     req.body.password = await bcrypt.hash(req.body.password, 10);
     const userhistory = await users.create(req.body);
     const output = {
       user: userhistory,
-      role: userhistory.role,
-      token: userhistory.token,
-      action: userhistory.action,
     };
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
-    }
+
     return res.status(201).json(output);
   } catch (e) {
-    next(e);
+    res.status(400).json(e);
   }
 }
 
@@ -32,7 +27,7 @@ async function handleSignin(req, res, next) {
     };
     res.status(200).json(user);
   } catch (e) {
-    next(e);
+    res.status(400).json(e);
   }
 }
 

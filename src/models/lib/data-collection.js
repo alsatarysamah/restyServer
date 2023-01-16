@@ -1,6 +1,3 @@
-
-
-
 class collection {
   constructor(model) {
     this.model = model;
@@ -15,7 +12,7 @@ class collection {
     } catch (e) {
       console.log(e);
       console.error("error in creating a new history in model ", this.model);
-      return "error in creating a new history";
+      return e.message;
     }
   }
   /////////////read//////////////////////////
@@ -31,8 +28,7 @@ class collection {
         return history;
       }
     } catch (e) {
-      console.error("error in reading history in model ", this.model);
-      return "error in reading history";
+      return e.message;
     }
   }
   //////////////update///////////////////////
@@ -41,19 +37,28 @@ class collection {
       let updated = await this.model.update(obj);
       return updated;
     } catch (error) {
-      console.error("error while updating  history in ", this.model);
-      return "error while updating  history";
+      return e.message;
     }
   }
   ///////////////delete/////////////////
   async delete(id) {
     try {
-      let deleted = null;
-      deleted = await this.model.destroy({ where: { id: id } });
+      let deleted = (deleted = await this.model.destroy({ where: { id: id } }));
       return deleted;
     } catch (error) {
-      console.error("error while deleting  history in ", this.model);
-      return "error while deleting  history";
+      return e.message;
+    }
+  }
+  async readByUsername(username) {
+    try {
+      let user = null;
+
+      
+        user = await this.model.findOne({ where: { username: username } });
+        return user;
+      
+    } catch (e) {
+      return e.message;
     }
   }
 }
