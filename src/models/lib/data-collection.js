@@ -43,10 +43,10 @@ class collection {
   ///////////////delete/////////////////
   async delete(id) {
     try {
-      let deleted = (deleted = await this.model.destroy({ where: { id: id } }));
+      let deleted = await this.model.destroy({ where: { id: id } });
       return deleted;
     } catch (error) {
-      return e.message;
+      return error.message;
     }
   }
   async readByUsername(username) {

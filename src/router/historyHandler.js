@@ -46,9 +46,10 @@ async function creathistory(req, res) {
       validationResult(req).throw();
       let id = parseInt(req.params.id);
       let deleted = await historyCollection.delete(id);
-      res.status(200).json(deleted);
+      return res.status(200).json("deleted");
     } catch (e) {
-      res.status(400).json(e);
+      console.log(e);
+     return res.status(400).json(e);
     }
   }
   
@@ -62,10 +63,10 @@ async function creathistory(req, res) {
       console.log(record);
       if(record===null)
       throw new Error("Invalid id")
-      res.status(200).json(record);
+     return res.status(200).json(record);
     } catch (e) {
-      console.log((e));
-      res.status(400).json(e);
+      console.log(e.message);
+     return res.status(400).json(e);
     }
   }
 
