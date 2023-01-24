@@ -9,9 +9,9 @@ async function handleSignup(req, res, next) {
     validationResult(req).throw();
 
     req.body.password = await bcrypt.hash(req.body.password, 10);
-    const userhistory = await users.create(req.body);
+    const userRecord = await users.create(req.body);
     const output = {
-      user: userhistory,
+      user: userRecord,
     };
 
     return res.status(201).json(output);

@@ -23,11 +23,7 @@ const users = (sequelize, DataTypes) => {
     { timestamps: false }
   );
 
-  model.beforeCreate = async function (password) {
-    let hashedPass = await bcrypt.hash(password, 10);
-
-    return hashedPass;
-  };
+ 
 
   model.authenticateBasic = async function (username, password) {
     const user = await this.findOne({ where: { username: username } });

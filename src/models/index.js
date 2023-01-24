@@ -21,10 +21,10 @@ const DATABASE_CONFIG = process.env.NODE_ENV === 'production' ? {
   }
 } : {};
 
-const sequelize = new Sequelize(DATABASE_URL, DATABASE_CONFIG);
+const sequelize = new Sequelize(DATABASE_URL, DATABASE_CONFIG);//creat instant from sequelize
 
 
-const userTable = users(sequelize, DataTypes);
+const userTable = users(sequelize, DataTypes);//use sequelize to creat model
 const userCollection=new DataCollection(userTable);
 
 
@@ -37,7 +37,30 @@ const historyCollection=new DataCollection(historysTable);
 userTable.hasMany(historysTable); // user many historys
 historysTable.belongsTo(userTable); // history one user
 
+const country = sequelize.define(
+  "country",
+  {
+    name: {
+      type: DataTypes.STRING,
+      unique: true,
+    },
+  },
+  { timestamps: false }
+);
 
+const capital = sequelize.define(
+  "capital",
+  {
+    name: {
+      type:DataTypes.STRING,
+      unique: true,
+    },
+  },
+  { timestamps: false }
+);
+
+country.belongsToMany(capital,{through:"bridge"});//inside the () the tabble that contain the forigenkey
+capital.belongsTo(country,{through:"bridge"})
 module.exports = {
     db: sequelize,
     users: users(sequelize, DataTypes),
