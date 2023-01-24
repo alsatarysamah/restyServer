@@ -46,7 +46,7 @@ async function creathistory(req, res) {
       validationResult(req).throw();
       let id = parseInt(req.params.id);
       let deleted = await historyCollection.delete(id);
-      return res.status(200).json("deleted");
+      return res.status(204).json("deleted");
     } catch (e) {
       console.log(e);
      return res.status(400).json(e);
