@@ -10,8 +10,8 @@ async function creathistory(req, res) {
     try {
       validationResult(req).throw();
   
-      let newhistory = req.body;
-      let newRecored = await historyCollection.create(newhistory);
+      let newHistory = req.body;
+      let newRecored = await historyCollection.create(newHistory);
       res.status(201).json(newRecored);
     } catch (e) {
       res.status(400).json(e);
@@ -19,7 +19,7 @@ async function creathistory(req, res) {
   }
   ///////////select *//////////////////
   async function getAll(req, res) {
-    console.log(req.params);
+  
     let history = await historyCollection.read();
     res.status(200).json(history);
   }
@@ -33,7 +33,7 @@ async function creathistory(req, res) {
       let newRecored = req.body;
       let found = await historyCollection.read(id);
       if (found) {
-        let updated = await found.update(newRecored);
+        let updated = await historyCollection.update(id,newRecored);
         res.status(201).json(updated);
       }
     } catch (e) {
@@ -60,7 +60,7 @@ async function creathistory(req, res) {
       validationResult(req).throw();
       const id = parseInt(req.params.id);
       let record = await historyCollection.read(id);
-      console.log(record);
+      
       if(record===null)
       throw new Error("Invalid id")
      return res.status(200).json(record);

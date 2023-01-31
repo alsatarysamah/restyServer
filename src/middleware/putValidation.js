@@ -13,7 +13,6 @@ module.exports = () => {
     try {
      
         if (req.body.url   ) {
-          console.log("yes==========================>");
           checkNullURL(req.body.url)
         checkURL(req.body.url);
       }

@@ -4,6 +4,7 @@ const express = require("express");
 const authRouter = express.Router();
 
 const basic = require("../middleware/basic");
+
 const bearerAuth = require("../middleware/bearer.js");
 const {userValidationRules}=require("../middleware/userValidation")
 const { handleSignin, handleSignup } = require("./authHandlers.js");

@@ -18,16 +18,12 @@ const users = (sequelize, DataTypes) => {
       token: {
         type: DataTypes.VIRTUAL,
       },
-      
     },
     { timestamps: false }
   );
 
- 
-
   model.authenticateBasic = async function (username, password) {
     const user = await this.findOne({ where: { username: username } });
-
     const valid = await bcrypt.compare(password, user.password);
 
     if (valid) {
@@ -35,6 +31,7 @@ const users = (sequelize, DataTypes) => {
       user.token = newToken;
       return user;
     }
+
     throw new Error("Invalid User");
   };
 

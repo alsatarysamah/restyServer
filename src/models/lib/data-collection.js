@@ -6,60 +6,36 @@ class collection {
   ////////////creat=insert///////////////////////////
 
   async create(obj) {
-    try {
-      let newhistory = await this.model.create(obj);
-      return newhistory;
-    } catch (e) {
-      console.log(e);
-      console.error("error in creating a new history in model ", this.model);
-      return e.message;
-    }
+    let newHistory = await this.model.create(obj);
+    return newHistory;
   }
   /////////////read//////////////////////////
   async read(id) {
-    try {
-      let history = null;
+    let history = null;
 
-      if (id) {
-        history = await this.model.findOne({ where: { id: id } });
-        return history;
-      } else {
-        history = await this.model.findAll();
-        return history;
-      }
-    } catch (e) {
-      return e.message;
+    if (id) {
+      history = await this.model.findOne({ where: { id: id } });
+      return history;
+    } else {
+      history = await this.model.findAll();
+      return history;
     }
   }
   //////////////update///////////////////////
   async update(id, obj) {
-    try {
-      let updated = await this.model.update(obj);
-      return updated;
-    } catch (error) {
-      return e.message;
-    }
+    let updated = await this.model.update(obj, { where: { id: id } });
+    return updated;
   }
   ///////////////delete/////////////////
   async delete(id) {
-    try {
-      let deleted = await this.model.destroy({ where: { id: id } });
-      return deleted;
-    } catch (error) {
-      return error.message;
-    }
+    let deleted = await this.model.destroy({ where: { id: id } });
+    return deleted;
   }
   async readByUsername(username) {
-    try {
-      let user = null;
+    let user = null;
 
-      
-        user = await this.model.findOne({ where: { username: username } });
-        return user;
-      
-    } catch (e) {
-      return e.message;
-    }
+    user = await this.model.findOne({ where: { username: username } });
+    return user;
   }
 }
 
