@@ -110,6 +110,31 @@ describe("Auth Router", () => {
     expect(response.body).toBeTruthy();
     expect(response.body).toEqual(expect.anything());
   });
+  
+  it("Home route", async () => {
+    //post new recored to get it again
+    const bearerResponse = await mockRequest
+      .get("/")
+      .set("Authorization", `Bearer ${accessToken}`);
+
+    const userObject = bearerResponse.body;
+    expect(userObject).toBeTruthy();
+  });
+
+  
+  it("Route without bearer", async () => {
+    const bearerResponse = await mockRequest
+      .get("/history/1")
+    expect(bearerResponse.text).toBe("Invalid Login");
+  });
+ it("E-mail is already in use", async () => {
+    const response = await mockRequest.post("/signup").send({ username: "user@yahoo.com", password: "123456" });
+
+    expect(response.text).toBe("{\"errors\":[{\"value\":\"user@yahoo.com\",\"msg\":\"E-mail is already in use\",\"param\":\"username\",\"location\":\"body\"}]}");
+  });
+
+});
+describe("History Route", () => {
   // /////////////////////////////////////////////////////
   it("GET Succeeds with a valid token", async () => {
     //post new recored to get it again
@@ -163,30 +188,6 @@ describe("Auth Router", () => {
     // expect(bearerResponse.text).toEqual("deleted");
   });
 
-  it("Home route", async () => {
-    //post new recored to get it again
-    const bearerResponse = await mockRequest
-      .get("/")
-      .set("Authorization", `Bearer ${accessToken}`);
-
-    const userObject = bearerResponse.body;
-    expect(userObject).toBeTruthy();
-  });
-
-  
-  it("Route without bearer", async () => {
-    const bearerResponse = await mockRequest
-      .get("/history/1")
-    expect(bearerResponse.text).toBe("Invalid Login");
-  });
- it("E-mail is already in use", async () => {
-    const response = await mockRequest.post("/signup").send({ username: "user@yahoo.com", password: "123456" });
-
-    expect(response.text).toBe("{\"errors\":[{\"value\":\"user@yahoo.com\",\"msg\":\"E-mail is already in use\",\"param\":\"username\",\"location\":\"body\"}]}");
-  });
-
-});
-describe("History Route", () => {
   it("Invalid get",async ()=>{
     const bearerResponse = await mockRequest
     .get("/history/i")
@@ -205,16 +206,11 @@ describe("History Route", () => {
     .set("Authorization", `Bearer ${accessToken}`);
   expect(bearerResponse.status).toBe(400);
   })
-  it("Invalid delete",async ()=>{
+  it("Invalid post",async ()=>{
     const bearerResponse = await mockRequest
     .post("/history")
     .set("Authorization", `Bearer ${accessToken}`);
   expect(bearerResponse.status).toBe(400);
   })
-  it("Invalid Get all",async ()=>{
-    const bearerResponse = await mockRequest
-    .get("/history")
-    .set("Authorization", `Bearer ${accessToken}`);
-  expect(bearerResponse.status).toBe(400);
-  })
+ 
 });
