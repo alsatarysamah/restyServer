@@ -60,11 +60,9 @@ describe("Auth Router", () => {
   });
 
   it("Can signin with bearer auth token", async () => {
-    // First, use basic to login to get a token
     const bearerResponse = await mockRequest
       .get("/history")
       .set("Authorization", `Bearer ${accessToken}`);
-    // Not checking the value of the response, only that we "got in"
     expect(bearerResponse.status).toBe(200);
   });
 
@@ -89,13 +87,11 @@ describe("Auth Router", () => {
   });
 
   it("bearer fails with an invalid token", async () => {
-    // First, use basic to login to get a token
     const response = await mockRequest
       .get("/history")
       .set("Authorization", `Bearer foobar`);
     const userList = response.body;
 
-    // Not checking the value of the response, only that we "got in"
     expect(response.status).toBe(403);
     expect(response.text).toEqual("Invalid Login");
     expect(userList.length).toBeFalsy();
@@ -112,7 +108,6 @@ describe("Auth Router", () => {
   });
   
   it("Home route", async () => {
-    //post new recored to get it again
     const bearerResponse = await mockRequest
       .get("/")
       .set("Authorization", `Bearer ${accessToken}`);
@@ -137,7 +132,6 @@ describe("Auth Router", () => {
 describe("History Route", () => {
   // /////////////////////////////////////////////////////
   it("GET Succeeds with a valid token", async () => {
-    //post new recored to get it again
     const bearerResponse = await mockRequest
       .post("/history")
       .set("Authorization", `Bearer ${accessToken}`)
@@ -185,7 +179,6 @@ describe("History Route", () => {
       .delete("/history/1")
       .set("Authorization", `Bearer ${accessToken}`);
     expect(bearerResponse.status).toBe(204);
-    // expect(bearerResponse.text).toEqual("deleted");
   });
 
   it("Invalid get",async ()=>{
