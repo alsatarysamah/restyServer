@@ -1,10 +1,10 @@
-const { check, body, oneOf } = require("express-validator");
+const {  body } = require("express-validator");
 
 
 const postValidation = () => {
+  console.log("***********************************",body("url"));
   return [
-    // oneOf([check("token").isEmpty()], "tokeeeeeeen"),
-    body("url", "Invalid or Missing URL").not().isEmpty().isURL(),
+    body("url","Invalid or Missing URL").not().isEmpty(),
     body("method", "Invalid or Missing method")
       .not("")
       .isEmpty()

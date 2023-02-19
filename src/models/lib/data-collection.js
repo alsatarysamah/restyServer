@@ -6,6 +6,7 @@ class collection {
   ////////////creat=insert///////////////////////////
 
   async create(obj) {
+    
     let newHistory = await this.model.create(obj);
     return newHistory;
   }
