@@ -18,6 +18,10 @@ const users = (sequelize, DataTypes) => {
       token: {
         type: DataTypes.VIRTUAL,
       },
+      role: {
+        type: DataTypes.ENUM('admin', 'user'),
+        defaultValue: 'user',
+    },
     },
     { timestamps: false }
   );

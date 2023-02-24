@@ -16,6 +16,7 @@ async function handleSignup(req, res, next) {
 
     return res.status(201).json(output);
   } catch (e) {
+    console.log(e);
     res.status(400).json(e);
   }
 }

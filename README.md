@@ -17,15 +17,27 @@ Handles user sign in requests.
 
     Returns the authenticated user object in the response body with a status code of 200 if successful, or an error response with a status code of 400 if unsuccessful.
 
-GET /history
 
-    Description: This endpoint retrieves all history records.
-    Request Headers: Bearer token
-    Response Status Codes:
-        200: Success
-        401: Unauthorized
-        500: Internal Server Error
 
+ GET  /history
+
+Description:
+
+    Retrieves history records for a user or for all users.
+
+Query Parameters:
+
+    userId (optional): The ID of the user whose history records should be retrieved. If not present, all history records will be retrieved.
+
+Request Headers:
+
+    Authorization: A bearer token obtained by authenticating with the API.
+
+Responses:
+
+    200 OK: The history records were retrieved successfully. The response body contains an array of history records in JSON format.
+    401 Unauthorized: The request was not authenticated, or the provided bearer token is invalid or has expired.
+    500 Internal Server Error: An unexpected error occurred while retrieving the history records. The error message should be included in the response body.
 POST /history
 
     Description: This endpoint creates a new history record.
