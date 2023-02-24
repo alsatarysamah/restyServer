@@ -178,7 +178,7 @@ describe("History Route", () => {
     const bearerResponse = await mockRequest
       .delete("/history/1")
       .set("Authorization", `Bearer ${accessToken}`);
-    expect(bearerResponse.status).toBe(204);
+    expect(bearerResponse.status).toBe(200);
   });
 
   it("Invalid get",async ()=>{

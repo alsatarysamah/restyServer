@@ -18,12 +18,11 @@ async function creathistory(req, res) {
 ///////////select *//////////////////
 async function getAll(req, res) {
   let history;
-  if (req.query.url) {
-    history = await historysTable.findAll({ where: { url: req.query.url } });
-  }
-  if (req.query.userId) {
+  const user = req.user.dataValues;
+
+  if (user.role == "user") {
     history = await historysTable.findAll({
-      where: { userId: req.query.userId },
+      where: { userId: user.id },
     });
   } else history = await historyCollection.read();
   res.status(200).json(history);
@@ -47,52 +46,59 @@ async function updating(req, res) {
   }
 }
 /////////////delete///////////////
+// async function deleting(req, res) {
+//   try {
+//     validationResult(req).throw();
+
+//     let all = req.query.all || false;
+//     if (!all) {
+//       let id = parseInt(req.params.id);
+//       let deletedRecord = await historyCollection.read(id);
+//       let deleted = await historyCollection.delete(id);
+//       return res
+//         .status(200)
+//         .json({ message: "deleted", deleted: deletedRecord });
+//     } else if (req.user.dataValues.role == "admin" && all) {
+//       await historysTable.destroy({ where: {} });
+//       res.status(200).json({ message: "All records deleted" });
+//     }
+//   } catch (e) {
+//     console.log(e);
+//     return res.status(400).json(e);
+//   }
+// }
 async function deleting(req, res) {
   try {
     validationResult(req).throw();
-    let id = parseInt(req.params.id);
-    let deleted = await historyCollection.delete(id);
-    return res.status(204).json("deleted");
-  } catch (e) {
-    console.log(e);
-    return res.status(400).json(e);
+
+    const { id } = req.params;
+    const { all } = req.query;
+
+    if (!all) {
+      const deletedRecord = await historyCollection.read(parseInt(id));
+      await historyCollection.delete(parseInt(id));
+
+      return res
+        .status(200)
+        .json({ message: "Deleted", deleted: deletedRecord });
+    }
+
+    if (req.user.dataValues.role !== "admin" || !all) {
+      throw new Error("Unauthorized to delete all history records");
+    }
+
+    await historysTable.destroy({ where: {} });
+
+    return res.status(200).json({ message: "All records deleted" });
+  } catch (error) {
+    console.error(error);
+    return res.status(400).json({ message: error.message });
   }
 }
 
-/////////////get one/////////////
-
-async function getUserRecoreds(req, res) {
-  try {
-    validationResult(req).throw();
-    const id = parseInt(req.params.id);
-    let record = await await historysTable.findAll({ where: { id: id } });
-
-    if (record === null) throw new Error("Invalid id");
-    return res.status(200).json(record);
-  } catch (e) {
-    console.log(e.message);
-    return res.status(400).json(e);
-  }
-}
-/////   getByUrl
-async function getByUrl(req, res) {
-  try {
-    validationResult(req).throw();
-    const url = parseInt(req.query.url);
-    let record = await historysTable.findAll({ where: { url: url } });
-
-    if (record === null) throw new Error("Invalid id");
-    return res.status(200).json(record);
-  } catch (e) {
-    console.log(e.message);
-    return res.status(400).json(e);
-  }
-}
 module.exports = {
   getAll,
-  getUserRecoreds,
   deleting,
   updating,
   creathistory,
-  getByUrl,
 };

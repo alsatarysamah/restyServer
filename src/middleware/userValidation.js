@@ -18,6 +18,10 @@ const { body } = require("express-validator");
         .not()
         .isEmpty()
         .isLength({ min: 6, max: 8 }),
+        body("role", "Invalid or Missing role")
+        .not("")
+        .isEmpty()
+        .isIn(["admin","user"]),
     ];
   };
   module.exports={userValidationRules};

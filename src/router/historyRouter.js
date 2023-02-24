@@ -6,11 +6,9 @@ const { param } = require("express-validator");
 
 const {
   getAll,
-  getUserRecoreds,
   deleting,
   updating,
   creathistory,
-  getByUrl,
 } = require("./historyHandler");
 const { postValidation } = require("../middleware/postValidation");
 
@@ -35,18 +33,5 @@ historyRouter.delete(
   bearer,
   deleting
 );
-////////////get one///////////////////////////
-historyRouter.get(
-  "/history/:id",
-  param("id", "Invalid id").isInt(),
-  bearer,
-  getUserRecoreds
-);
-///get by URL//////////////////////////
-historyRouter.get(
-  "/history",
-  // param("url", "Invalid url").isURL(),
-  bearer,
-  getByUrl
-);
+
 module.exports = historyRouter;
