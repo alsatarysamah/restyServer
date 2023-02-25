@@ -14,6 +14,10 @@ module.exports = async (req, res, next) => {
 
     next();
   } catch (e) {
-    res.status(403).send("Invalid Login");
+    if (res.headersSent) {
+      return next(e);
+    } else {
+      res.status(403).send("Invalid Login");
+    }
   }
 };

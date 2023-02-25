@@ -8,6 +8,8 @@ const notFound = require("./error-handlers/404.js");
 // const userRoute=require("./router/user")
 const historyRouter = require("../src/router/historyRouter");
 const authRoutes = require("./router/authRouter");
+const userRoutes = require("./router/userRouter");
+
 
 
 const app = express();
@@ -25,6 +27,8 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(historyRouter)
 app.use(authRoutes)
+app.use(userRoutes)
+
 
 
 // Catchalls

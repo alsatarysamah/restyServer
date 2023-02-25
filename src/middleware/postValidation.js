@@ -9,7 +9,6 @@ const postValidation = () => {
       .not("")
       .isEmpty()
       .isIn(["get", "post", "delete", "put"]),
-    body("userId", "Invalid or missing userId").not().isEmpty().isInt(),
   ];
 };
 module.exports = { postValidation };
