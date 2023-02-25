@@ -7,7 +7,6 @@ async function creathistory(req, res) {
     validationResult(req).throw();
 
     let newHistory = req.body;
-    console.log(req.user.dataValues.id);
     req.body.response = [req.body.response];
     newHistory.userId = req.user.dataValues.id;
     let newRecored = await historyCollection.create(newHistory);
@@ -21,7 +20,6 @@ async function creathistory(req, res) {
 async function getAll(req, res) {
   let history;
   let user = req.user.dataValues;
-  console.log(user);
   if (req.user.dataValues.role == "user") {
     history = await historysTable.findAll({
       where: { userId: req.user.dataValues.id },

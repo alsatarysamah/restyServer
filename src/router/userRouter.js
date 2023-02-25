@@ -8,7 +8,7 @@ const { userCollection } = require("../models/index");
 const { userValidationRules } = require("../middleware/userValidation");
 const userRouter = express.Router();
 
-// const {getAll,deleting,getOneRecored,updating,creatRecord}=require("./apiHandlers")
+
 
 userRouter.get("/user", bearer,acl("admin"),  getAll);
 userRouter.post("/user", bearer, acl("admin"), creatRecord);

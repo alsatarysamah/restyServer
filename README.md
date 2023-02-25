@@ -25,29 +25,19 @@ Description:
 
     Retrieves history records for a user or for all users.
 
-Query Parameters:
 
-    userId (optional): The ID of the user whose history records should be retrieved. If not present, all history records will be retrieved.
 
 Request Headers:
 
     Authorization: A bearer token obtained by authenticating with the API.
 
-Responses:
 
-    200 OK: The history records were retrieved successfully. The response body contains an array of history records in JSON format.
-    401 Unauthorized: The request was not authenticated, or the provided bearer token is invalid or has expired.
-    500 Internal Server Error: An unexpected error occurred while retrieving the history records. The error message should be included in the response body.
 POST /history
 
     Description: This endpoint creates a new history record.
     Request Headers: Bearer token
     Request Body: JSON object containing data for the new record
-    Response Status Codes:
-        201: Created
-        400: Bad Request (due to invalid input data)
-        401: Unauthorized
-        500: Internal Server Error
+   
 
 PUT /history/:id
 
@@ -55,41 +45,101 @@ PUT /history/:id
     Request Headers: Bearer token
     Request Parameters: ID of the history record to update
     Request Body: JSON object containing data to update in the record
-    Response Status Codes:
-        200: Success
-        400: Bad Request (due to invalid input data)
-        401: Unauthorized
-        404: Not Found (if the history record with the specified ID is not found)
-        500: Internal Server Error
+   
 
 DELETE /history/:id
 
     Description: This endpoint deletes an existing history record by its ID.
     Request Headers: Bearer token
     Request Parameters: ID of the history record to delete
-    Response Status Codes:
-        200: Success
-        401: Unauthorized
-        404: Not Found (if the history record with the specified ID is not found)
-        500: Internal Server Error
+    
 
 GET /history/:id
 
     Description: This endpoint retrieves a single history record by its ID.
     Request Headers: Bearer token
     Request Parameters: ID of the history record to retrieve
-    Response Status Codes:
-        200: Success
-        401: Unauthorized
-        404: Not Found (if the history record with the specified ID is not found)
-        500: Internal Server Error
+   
 
-GET /history?url=<url>
 
-    Description: This endpoint retrieves all history records that contain a specific URL.
-    Request Headers: Bearer token
-    Request Query Parameters: URL to search for
+GET /user
+
+     Description:
+     Returns all user records.
+
+    Request Headers:
+    Authorization: Bearer <token>
+
     Response Status Codes:
-        200: Success
-        401: Unauthorized
-        500: Internal Server Error
+    200 OK - The request was successful and the response contains the user records.
+    401 Unauthorized - The request requires authentication and the token is missing or invalid.
+    500 Internal Server Error - An error occurred while processing the request on the server.
+
+
+
+POST /user
+
+    Description:
+    Creates a new user record in the database.
+
+    Request Headers:
+    Authorization: Bearer <token>
+
+    Request Body:
+    {
+    "username": "<string>",
+    "password": "<string>",
+    "email": "<string>",
+    "role": "<string>"
+    }
+
+
+
+
+
+PUT /user/:id
+
+    Description:
+    Updates the user record with the specified ID.
+
+    Request Headers:
+    Authorization: Bearer <token>
+
+    Request Parameters:
+    id: The ID of the user record to update.
+
+    Request Body:
+    {
+    "username": "<string>",
+    "password": "<string>",
+    "email": "<string>",
+    "role": "<string>"
+    }
+
+
+
+
+DELETE /user/:id
+
+    Description:
+    Deletes the user record with the specified ID.
+
+    Request Headers:
+    Authorization: Bearer <token>
+
+    Request Parameters:
+    id: The ID of the user record to delete.
+
+
+
+GET /user/:id
+
+    Description:
+    Returns the user record with the specified ID.
+
+    Request Headers:
+    Authorization: Bearer <token>
+
+    Request Parameters:
+    id: The ID of the user record to retrieve.
+
