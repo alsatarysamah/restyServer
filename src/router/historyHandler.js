@@ -8,6 +8,7 @@ async function creathistory(req, res) {
 
     let newHistory = req.body;
     req.body.response = [req.body.response];
+    newHistory.userId = req.user.dataValues.id;
     let newRecored = await historyCollection.create(newHistory);
     res.status(201).json(newRecored);
   } catch (e) {
@@ -18,11 +19,10 @@ async function creathistory(req, res) {
 ///////////select *//////////////////
 async function getAll(req, res) {
   let history;
-  const user = req.user.dataValues;
-
-  if (user.role == "user") {
+  let user = req.user.dataValues;
+  if (req.user.dataValues.role == "user") {
     history = await historysTable.findAll({
-      where: { userId: user.id },
+      where: { userId: req.user.dataValues.id },
     });
   } else history = await historyCollection.read();
   res.status(200).json(history);
@@ -46,27 +46,7 @@ async function updating(req, res) {
   }
 }
 /////////////delete///////////////
-// async function deleting(req, res) {
-//   try {
-//     validationResult(req).throw();
 
-//     let all = req.query.all || false;
-//     if (!all) {
-//       let id = parseInt(req.params.id);
-//       let deletedRecord = await historyCollection.read(id);
-//       let deleted = await historyCollection.delete(id);
-//       return res
-//         .status(200)
-//         .json({ message: "deleted", deleted: deletedRecord });
-//     } else if (req.user.dataValues.role == "admin" && all) {
-//       await historysTable.destroy({ where: {} });
-//       res.status(200).json({ message: "All records deleted" });
-//     }
-//   } catch (e) {
-//     console.log(e);
-//     return res.status(400).json(e);
-//   }
-// }
 async function deleting(req, res) {
   try {
     validationResult(req).throw();

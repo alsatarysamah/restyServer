@@ -1,11 +1,11 @@
 'use strict';
 
-module.exports = (action) => {
-    // 'update'
+module.exports = (role) => {
+
     return (req, res, next) => {
         try {
             // user can do action
-            if (req.user.actions.includes(action)) {
+            if (req.user.dataValues.role.includes(role)) {
                 next();
             } else {
                 next('Access Denied');
@@ -15,3 +15,4 @@ module.exports = (action) => {
         }
     }
 }
+

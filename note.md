@@ -2,18 +2,27 @@
 
  {
  "username":"s@yahoo.com",
- "password":"123456"
+ "password":"123456",
+ "role":"admin"
 }
 
+{
+ "username":"ad@yahoo.com",
+ "password":"123456",
+ "firstName":"samah",
+ "lastName":"satary",
+ "role":"admin"
+}
 Fetch error
 Not Found https://catfact.ninja/docs/api-docs
 
-
 {
   "url": "https://api.covid19api.com/summary",
-  "method": "put",
-  "userId":1
+  "method": "put"
 }
+
+
+{"method":"delete"}
 
 
 http://localhost:4000/history?all=1

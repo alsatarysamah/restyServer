@@ -15,13 +15,22 @@ const users = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
+      firstName: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      lastName: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+     
       token: {
         type: DataTypes.VIRTUAL,
       },
       role: {
-        type: DataTypes.ENUM('admin', 'user'),
-        defaultValue: 'user',
-    },
+        type: DataTypes.ENUM("admin", "user"),
+        defaultValue: "user",
+      },
     },
     { timestamps: false }
   );

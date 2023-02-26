@@ -3,6 +3,7 @@ const { body } = require("express-validator");
  
  
  const userValidationRules = () => {
+
     return [
       body("username", "Invalid or missing Email")
         .not()
@@ -17,7 +18,7 @@ const { body } = require("express-validator");
       body("password", "Invalid or missing password")
         .not()
         .isEmpty()
-        .isLength({ min: 6, max: 8 }),
+        .isLength({ min: 6, max: 8 }).withMessage(" Password should be at least 6 characters long"),
         body("role", "Invalid or Missing role")
         .not("")
         .isEmpty()

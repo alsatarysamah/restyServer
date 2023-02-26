@@ -29,7 +29,7 @@ historyRouter.put(
 //////////////delete/////////////////////////
 historyRouter.delete(
   "/history/:id",
-  param("id", "Invalid id").isInt(),
+  param("id", "Invalid ID").isInt(),
   bearer,
   deleting
 );
