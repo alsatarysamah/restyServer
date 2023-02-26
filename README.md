@@ -1,6 +1,8 @@
 # Resty Server
 Express server 
 
+# ER
+![](./restyER.png)
 # Routes
 
 This server has the following routes:
